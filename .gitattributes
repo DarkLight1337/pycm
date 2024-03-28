@@ -1,0 +1,29 @@
+# Enforce Unix line endings
+* text=auto eol=lf
+
+# Explicitly declare text files you want to always be normalized and converted
+# to native line endings on checkout.
+*.css text
+*.js text
+*.html text
+*.py text
+*.c text
+*.h text
+*.cpp text
+*.hpp text
+*.cu text
+*.sh text
+
+# Denote all files that are truly binary and should not be modified.
+*.bin binary
+*.npy binary
+*.npz binary
+*.pkl binary
+*.pth binary
+*.cu.o binary
+*.so binary
+*.png binary
+*.jpg binary
+*.zip binary
+*.7z binary
+*.gz binary

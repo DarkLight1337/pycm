@@ -1,0 +1,186 @@
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "pycm"
+version = "1.0.0"
+description = "Command-line tool for checking Python compatibility"
+license = "MIT"
+authors = [
+    "Cyrus Leung <tlleungac@connect.ust.hk>",
+]
+homepage = "https://github.com/DarkLight1337/pycm"
+repository = "https://github.com/DarkLight1337/pycm"
+keywords = [
+    "cli", "dependencies"
+]
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Software Development :: Libraries :: Python Modules",
+]
+
+[tool.poetry.scripts]
+pycm = "pycm:cli"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+
+click = ">=8.1"
+pandas = ">=2.0"
+
+[tool.poetry.group.dev]
+optional = true
+
+[tool.poetry.group.dev.dependencies]
+deptry = ">=0.14"
+ruff = ">=0.3"
+pyright = ">=1.1.354"
+
+[tool.deptry]
+extend_exclude = ["__pycache__"]
+
+[tool.deptry.per_rule_ignores]
+DEP001 = ["_typeshed", "pkg_resources"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py38"
+
+[tool.ruff.lint]
+select = [
+    # Pyflakes
+    "F",
+    # pycodestyle
+    "E", "W",   
+    # flake8-boolean-trap
+    "FBT",
+    # flake8-bugbear
+    "B",
+    # flake8-builtins
+    "A",
+    # flake8-commas
+    "COM",
+    # flake8-comprehensions
+    "C4",
+    # flake8-datetimez
+    "DTZ",
+    # flake8-debugger
+    "T10",
+    # flake8-errmsg
+    "EM",
+    # flake8-future-annotations
+    "FA",
+    # flake8-implicit-str-concat
+    "ISC",
+    # flake8-import-conventions
+    "ICN",
+    # flake8-logging
+    "LOG",
+    # flake8-logging-format
+    "G",
+    # flake8-no-pep420
+    "INP",
+    # flake8-pie
+    "PIE",
+    # flake8-print
+    "T20",
+    # flake8-raise
+    "RSE",
+    # flake8-simplify
+    "SIM",
+    # flake8-use-pathlib
+    "PTH",
+    # NumPy-specific rules
+    "NPY",
+    # Pandas-specific rules
+    "PD",
+    # Ruff-specific rules
+    "RUF",
+    # isort
+    "I",
+    # pydocstyle
+    "D",
+    # pyupgrade
+    "UP",
+]
+ignore = [
+    "F403", "F405",
+    "E501",
+    "SIM102", "SIM117", "SIM118",
+    "PIE790",
+    "D1", "D205", "D401",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401"]
+
+[tool.ruff.lint.flake8-builtins]
+builtins-ignorelist = ["copyright", "hash", "id", "type"]
+
+[tool.ruff.lint.flake8-comprehensions]
+allow-dict-calls-with-keyword-arguments = true
+
+[tool.ruff.lint.isort]
+classes = [
+    # Standard library
+    "ABC", "IO",
+]
+extra-standard-library = ["typing_extensions"]
+
+section-order = ["future", "standard-library", "third-party", "first-party", "local-folder"]
+combine-as-imports = true
+force-sort-within-sections = true
+
+[tool.ruff.lint.pydocstyle]
+convention = "numpy"
+
+[tool.ruff.lint.pyupgrade]
+keep-runtime-typing = true
+
+[tool.pyright]
+# These are set to "error" in "strict" mode
+reportConstantRedefinition = "warning"
+reportDeprecated = "warning"
+reportDuplicateImport = "warning"
+reportFunctionMemberAccess = "warning"
+reportIncompatibleMethodOverride = "warning"
+reportIncompatibleVariableOverride = "warning"
+reportIncompleteStub = "warning"
+reportInconsistentConstructor = "warning"
+reportInvalidStubStatement = "warning"
+reportMatchNotExhaustive = "warning"
+reportMissingParameterType = "warning"
+reportMissingTypeArgument = "warning"
+reportOverlappingOverload = "warning"
+reportPrivateUsage = "warning"
+reportTypeCommentUsage = "warning"
+# reportUnknownArgumentType = "warning"
+# reportUnknownLambdaType = "warning"
+# reportUnknownMemberType = "warning"
+# reportUnknownParameterType = "warning"
+# reportUnknownVariableType = "warning"
+reportUnnecessaryCast = "warning"
+reportUnnecessaryComparison = "warning"
+reportUnnecessaryContains = "warning"
+reportUnnecessaryIsInstance = "warning"
+# reportUnusedClass = "warning"
+reportUnusedImport = "warning"
+# reportUnusedFunction = "warning"
+reportUnusedVariable = "warning"
+reportUntypedBaseClass = "warning"
+reportUntypedClassDecorator = "warning"
+reportUntypedFunctionDecorator = "warning"
+reportUntypedNamedTuple = "warning"
+
+# These are set to "none" even in "strict" mode
+reportCallInDefaultInitializer = "warning"
+# reportImplicitOverride = "warning"
+reportImplicitStringConcatenation = "warning"
+# reportImportCycles = "warning"
+reportMissingSuperCall = "warning"
+reportPropertyTypeMismatch = "warning"
+reportShadowedImports = "warning"
+reportUninitializedInstanceVariable = "warning"
+reportUnnecessaryTypeIgnoreComment = "information"
+# reportUnusedCallResult = "warning"
