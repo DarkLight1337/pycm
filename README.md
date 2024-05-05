@@ -53,3 +53,7 @@ Python (↓)
 1. [Setup](#setup) the development environment.
 2. Run `poetry run deptry . && poetry run ruff check . && poetry run pyright .` to lint the code.
 
+### Test
+
+1. [Setup](#setup) the development environment.
+2. Run `poetry run -- pytest` to test the code and output the coverage report.

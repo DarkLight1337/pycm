@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "pycm"
-version = "1.0.0"
+version = "1.0.1"
 description = "Command-line tool for checking Python compatibility"
 license = "MIT"
 authors = [
@@ -21,27 +21,37 @@ classifiers = [
 ]
 
 [tool.poetry.scripts]
-pycm = "pycm:cli"
+pycm = "pycm.cli:cli"
 
 [tool.poetry.dependencies]
 python = "^3.8"
 
 click = ">=8.1"
-pandas = ">=2.0"
+pandas = { version = ">=2.0", extras = ["html"] }
+packaging = ">=24.0"
 
 [tool.poetry.group.dev]
 optional = true
 
 [tool.poetry.group.dev.dependencies]
+pandas-stubs = ">=2.0"
+
 deptry = ">=0.14"
 ruff = ">=0.3"
 pyright = ">=1.1.354"
 
+pytest = ">=7.0"
+pytest-cov = ">=3.0"
+pytest-xdist = ">=3.5"
+
+beautifulsoup4 = ">=4.12.3"
+requests = ">=2.31.0"
+
 [tool.deptry]
-extend_exclude = ["__pycache__"]
+extend_exclude = ["\\.coverage/", "test", "__pycache__"]
 
 [tool.deptry.per_rule_ignores]
-DEP001 = ["_typeshed", "pkg_resources"]
+DEP001 = ["_typeshed"]
 
 [tool.ruff]
 line-length = 100
@@ -184,3 +194,26 @@ reportShadowedImports = "warning"
 reportUninitializedInstanceVariable = "warning"
 reportUnnecessaryTypeIgnoreComment = "information"
 # reportUnusedCallResult = "warning"
+
+[tool.pytest.ini_options]
+addopts = "--cov=pycm --cov-report=term-missing --cov-report html:coverage --cov-branch --cov-context=test"
+testpaths = ["test"]
+
+[tool.coverage.html]
+show_contexts = true
+
+[tool.coverage.report]
+exclude_also = [
+    "def __repr__",
+    "if self.debug:",
+    "if settings.DEBUG",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if 0:",
+    "if __name__ == .__main__.:",
+    "if TYPE_CHECKING:",
+    "class .*\\bProtocol(\\[.*\\])?\\):",
+    "@(abc\\.)?abstractmethod",
+    "@(typing\\.)?overload",
+]
+

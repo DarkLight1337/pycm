@@ -1,0 +1,26 @@
+name: Setup environment
+description: |
+  Sets up the development environment for this repository.
+  
+  Notes:
+  1. You have to first checkout the repository.
+  2. To use the conda environment, you have to set `defaults.run.shell` to `bash -el {0}`. See [this page](https://github.com/marketplace/actions/setup-miniconda#important) for more details.
+
+inputs:
+  python-version:
+    description: 'Python version'
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Install Miniconda
+      uses: conda-incubator/setup-miniconda@v3
+      with:
+        auto-update-conda: true
+        python-version: ${{ inputs.python-version }}
+        activate-environment: 'pyimorg-${{ inputs.python-version }}'
+    - name: Install Poetry
+      uses: snok/install-poetry@v1
+      with:
+        version: '1.4.0'
