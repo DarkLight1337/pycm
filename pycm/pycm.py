@@ -1,10 +1,10 @@
 from __future__ import annotations
 
 from collections import defaultdict
-from collections.abc import Collection
-from itertools import groupby
+from collections.abc import Callable, Collection, Hashable, Iterable
 import json
 import re
+from typing import TypeVar
 from urllib.request import urlopen
 
 from packaging.requirements import Requirement
@@ -45,6 +45,18 @@ def _get_python_requirements(dist_data: dict[str, str]) -> Collection[Requiremen
     else:
         return [requires_python_constraint, bdist_constraint]
 
+_K = TypeVar('_K', bound=Hashable)
+_V = TypeVar('_V')
+
+def _full_groupby(values: Iterable[_V], *, key: Callable[[_V], _K]):
+    """Unlike :class:`itertools.groupby`, groups are not broken by non-contiguous data."""
+    groups: dict[_K, list[_V]] = defaultdict(list)
+
+    for value in values:
+        groups[key(value)].append(value)
+
+    return groups.items()
+
 def pycm(package_name: str, python_versions: list[str], *, groupby_patch: bool = True) -> pd.DataFrame:
     """Show the versions of a PyPI package that are compatible with each Python version."""
     output = defaultdict(lambda: defaultdict(lambda: ''))
@@ -60,13 +72,12 @@ def pycm(package_name: str, python_versions: list[str], *, groupby_patch: bool =
 
     output_df = pd.DataFrame.from_dict(data=output, orient='index').fillna('')
 
-
     if groupby_patch:
         # We only care about the latest patch version for each minor version
         output_columns = tuple(str(c) for c in output_df.columns)
         output_columns = [
             max(columns, key=Version)
-            for _, columns in groupby(output_columns, key=lambda s: Version(s).release[:2])
+            for _, columns in _full_groupby(output_columns, key=lambda s: Version(s).release[:2])
         ]
     else:
         output_columns = output_df.columns
