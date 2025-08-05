@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "pycm"
-version = "1.0.2"
+version = "1.0.3"
 description = "Command-line tool for checking Python compatibility"
 license = "MIT"
 authors = [
@@ -24,28 +24,26 @@ classifiers = [
 pycm = "pycm.cli:cli"
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = ">=3.9,<4"
 
 click = ">=8.1"
-pandas = { version = ">=2.0", extras = ["html"] }
+pandas = {version = ">=2.1", extras = ["html"]}
 packaging = ">=24.0"
 
 [tool.poetry.group.dev]
 optional = true
 
 [tool.poetry.group.dev.dependencies]
-pandas-stubs = ">=2.0"
-
-deptry = ">=0.14"
-ruff = ">=0.3"
-pyright = ">=1.1.354"
+deptry = ">=0.23"
+ruff = ">=0.12"
+pyright = ">=1.1.400"
 
 pytest = ">=7.0"
 pytest-cov = ">=3.0"
 pytest-xdist = ">=3.5"
 
 beautifulsoup4 = ">=4.12.3"
-requests = ">=2.31.0"
+requests = ">=2.32"
 
 [tool.deptry]
 extend_exclude = ["\\.coverage/", "test", "__pycache__"]
@@ -55,7 +53,7 @@ DEP001 = ["_typeshed"]
 
 [tool.ruff]
 line-length = 100
-target-version = "py38"
+target-version = "py39"
 
 [tool.ruff.lint]
 select = [
