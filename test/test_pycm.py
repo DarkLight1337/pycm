@@ -1,3 +1,4 @@
+from io import StringIO
 from urllib.error import HTTPError
 
 from bs4 import BeautifulSoup
@@ -28,14 +29,21 @@ def test_tensorflow():
     soup = BeautifulSoup(res.text, features='lxml')
 
     cpu_table, = soup.select('#cpu + table')
-    expected_df, = pd.read_html(str(cpu_table))
+    with StringIO(str(cpu_table)) as buf:
+        expected_df, = pd.read_html(buf)
 
     actual_df = pycm('tensorflow', ['3.7', '3.8', '3.9', '3.10', '3.11', '3.12', '3.13'], groupby_patch=False)
 
     for _, expected_row in expected_df.iterrows():
-        tf_version_str = expected_row['Version'].replace('tensorflow-', '')
+        version_str = expected_row['Version']
+        assert isinstance(version_str, str)
+
+        tf_version_str = version_str.replace('tensorflow-', '')
         if Version(tf_version_str) >= Version('2.2.0'):
-            min_py, max_py = expected_row['Python version'].split('-')
+            py_version_str = expected_row['Python version']
+            assert isinstance(py_version_str, str)
+
+            min_py, max_py = py_version_str.split('-')
             py_spec = Requirement(f'python>={min_py},<={max_py}').specifier
 
             actual_spec = actual_df[tf_version_str].to_dict()

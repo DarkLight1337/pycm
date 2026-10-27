@@ -6,7 +6,7 @@
 
 ### Requirements
 
-- [Python](https://www.python.org/) 3.8+
+- [Python](https://www.python.org/) 3.11+
 
 ### Procedure
 
@@ -22,16 +22,16 @@ pycm <package> --python=<versions>
 
 ### Example
 
-Show the versions of [TensorFlow](https://tensorflow.org/) that can be used with Python 3.8-3.11:
+Show the versions of [TensorFlow](https://tensorflow.org/) that can be used with Python 3.11-3.14:
 
 ``` 
-> pycm tensorflow --python=3.8,3.9,3.10,3.11
-tensorflow (→) 2.2.3 2.3.4 2.4.4 2.5.3 2.6.5 2.7.4 2.8.4 2.9.3 2.10.1 2.11.1 2.12.1 2.13.1 2.14.1 2.15.1 2.16.1
-Python (↓)
-3.8                Y     Y     Y     Y     Y     Y     Y     Y      Y      Y      Y      Y
-3.9                                  Y     Y     Y     Y     Y      Y      Y      Y      Y      Y      Y      Y
-3.10                                                   Y     Y      Y      Y      Y      Y      Y      Y      Y
-3.11                                                                              Y      Y      Y      Y      Y
+> pycm tensorflow --python=3.11,3.12,3.13,3.14
+tensorflow (→) 2.12.1 2.13.1 2.14.1 2.15.1 2.16.2 2.17.1 2.18.1 2.19.1 2.20.0 2.21.0 2.22.0rc0
+Python (↓)                                                                                    
+3.11                Y      Y      Y      Y      Y      Y      Y      Y      Y      Y         Y
+3.12                                            Y      Y      Y      Y      Y      Y         Y
+3.13                                                                        Y      Y         Y
+3.14                                                                                         Y
 ```
 
 (You can cross-check this table against [the official compatibility matrix](https://www.tensorflow.org/install/source#tested_build_configurations).)
@@ -40,20 +40,20 @@ Python (↓)
 
 ### Requirements
 
-- [Python](https://www.python.org/) 3.8+
-- [Poetry](https://python-poetry.org/) 1.4+
+- [Python](https://www.python.org/) 3.11+
+- [uv](https://docs.astral.sh/uv/) 0.13+
 
 ### Setup
 
 1. Clone this repository to your machine.
-2. Run `poetry lock --no-update && poetry install --with dev` to setup the Python enviroment.
+2. Run `uv lock && uv sync` to setup the Python enviroment.
 
 ### Lint
 
 1. [Setup](#setup) the development environment.
-2. Run `poetry run deptry . && poetry run ruff check . && poetry run pyright .` to lint the code.
+2. Run `uv run deptry . && uv run ruff check . && uv run pyright .` to lint the code.
 
 ### Test
 
 1. [Setup](#setup) the development environment.
-2. Run `poetry run -- pytest` to test the code and output the coverage report.
+2. Run `uv run pytest` to test the code and output the coverage report.

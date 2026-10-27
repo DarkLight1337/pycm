@@ -1,49 +1,49 @@
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
-[tool.poetry]
+[project]
 name = "pycm"
-version = "1.0.3"
+version = "1.0.4"
 description = "Command-line tool for checking Python compatibility"
+readme = "README.md"
 license = "MIT"
+requires-python = ">=3.11,<4"
 authors = [
-    "Cyrus Leung <tlleungac@connect.ust.hk>",
+    { name = "Cyrus Leung", email = "tlleungac@connect.ust.hk" },
 ]
-homepage = "https://github.com/DarkLight1337/pycm"
-repository = "https://github.com/DarkLight1337/pycm"
 keywords = [
-    "cli", "dependencies"
+    "cli", "dependencies",
 ]
 classifiers = [
     "License :: OSI Approved :: MIT License",
-    "Software Development :: Libraries :: Python Modules",
+]
+dependencies = [
+    "click>=8.1",
+    "pandas[html]>=2.1",
+    "packaging>=24.0",
 ]
 
-[tool.poetry.scripts]
+[project.urls]
+Homepage = "https://github.com/DarkLight1337/pycm"
+Repository = "https://github.com/DarkLight1337/pycm"
+
+[project.scripts]
 pycm = "pycm.cli:cli"
 
-[tool.poetry.dependencies]
-python = ">=3.9,<4"
+[dependency-groups]
+dev = [
+    "deptry>=0.23",
+    "ruff>=0.12",
+    "pyright>=1.1.400",
 
-click = ">=8.1"
-pandas = {version = ">=2.1", extras = ["html"]}
-packaging = ">=24.0"
+    "pytest>=7.0",
+    "pytest-cov>=3.0",
+    "pytest-xdist>=3.5",
 
-[tool.poetry.group.dev]
-optional = true
-
-[tool.poetry.group.dev.dependencies]
-deptry = ">=0.23"
-ruff = ">=0.12"
-pyright = ">=1.1.400"
-
-pytest = ">=7.0"
-pytest-cov = ">=3.0"
-pytest-xdist = ">=3.5"
-
-beautifulsoup4 = ">=4.12.3"
-requests = ">=2.32"
+    "beautifulsoup4>=4.12.3",
+    "requests>=2.32",
+]
 
 [tool.deptry]
 extend_exclude = ["\\.coverage/", "test", "__pycache__"]
@@ -60,7 +60,7 @@ select = [
     # Pyflakes
     "F",
     # pycodestyle
-    "E", "W",   
+    "E", "W",
     # flake8-boolean-trap
     "FBT",
     # flake8-bugbear
@@ -214,4 +214,3 @@ exclude_also = [
     "@(abc\\.)?abstractmethod",
     "@(typing\\.)?overload",
 ]
-

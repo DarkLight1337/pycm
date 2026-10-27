@@ -9,7 +9,8 @@ description: |
 inputs:
   python-version:
     description: 'Python version'
-    required: true
+    required: false
+    default: '3.11'
 
 runs:
   using: composite
@@ -19,8 +20,8 @@ runs:
       with:
         auto-update-conda: true
         python-version: ${{ inputs.python-version }}
-        activate-environment: 'pyimorg-${{ inputs.python-version }}'
-    - name: Install Poetry
-      uses: snok/install-poetry@v1
+        activate-environment: 'pycm-${{ inputs.python-version }}'
+    - name: Install uv
+      uses: astral-sh/setup-uv@v6
       with:
-        version: '1.4.0'
+        version: '0.13.6'
